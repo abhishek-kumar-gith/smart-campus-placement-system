@@ -1,0 +1,77 @@
+version: '3.9'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: campus_backend
+    restart: unless-stopped
+    env_file: ./backend/.env
+    ports:
+      - "5000:5000"
+    volumes:
+      - backend_uploads:/app/uploads
+      - backend_logs:/app/logs
+    networks:
+      - campus_network
+    depends_on:
+      - mongo
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:5000/api/v1/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 20s
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: campus_frontend
+    restart: unless-stopped
+    networks:
+      - campus_network
+    depends_on:
+      - backend
+
+  nginx:
+    image: nginx:alpine
+    container_name: campus_nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - nginx_logs:/var/log/nginx
+    networks:
+      - campus_network
+    depends_on:
+      - frontend
+      - backend
+
+  mongo:
+    image: mongo:7
+    container_name: campus_mongo
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER:-admin}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASS:-password}
+      MONGO_INITDB_DATABASE: campusPlacement
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - campus_network
+
+volumes:
+  backend_uploads:
+  backend_logs:
+  nginx_logs:
+  mongo_data:
+
+networks:
+  campus_network:
+    driver: bridge

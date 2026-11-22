@@ -1,0 +1,53 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Production builds
+/frontend/dist
+/frontend/build
+
+# Backend uploads and logs
+/backend/uploads/resumes/*
+/backend/uploads/logos/*
+/backend/uploads/profile-photos/*
+/backend/logs/*
+
+!/backend/uploads/resumes/.gitkeep
+!/backend/uploads/logos/.gitkeep
+!/backend/uploads/profile-photos/.gitkeep
+!/backend/logs/.gitkeep
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+backend/.env
+frontend/.env
+
+# OS files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# IDE
+.vscode/
+.idea/
+*.iml
+
+# Docker
+.docker/
+
+# Testing
+coverage/
+*.lcov
+
+# Misc
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
