@@ -189,7 +189,7 @@ router.patch('/students/:id/placement-status', validate(z.object({
   if (req.body.placementStatus === 'placed' && student.userId) {
     const user = await User.findById(student.userId).select('email');
     if (user?.email) {
-      await sendNotificationEmail(user.email, 'Congratulations - Placement Confirmed', `<h2>Smart Campus Placement</h2><p>Congratulations ${student.fullName}. Your placement status has been officially confirmed.</p>`);
+      await sendNotificationEmail(user.email, 'Congratulations - Placement Confirmed', `<h2>DCRUST Placement Portal</h2><p>Congratulations ${student.fullName}. Your placement status has been officially confirmed.</p>`);
     }
   }
   return ApiResponse.success(res, student, 'Placement status updated');

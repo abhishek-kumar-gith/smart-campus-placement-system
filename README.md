@@ -1,4 +1,4 @@
-# 🎓 Smart Campus Placement Management System
+# 🎓 DCRUST Placement Portal
 
 <div align="center">
 
@@ -20,7 +20,7 @@
 
 ## 📋 Overview
 
-The **Smart Campus Placement Management System** is a modern, full-stack web application designed to digitize and streamline the entire campus placement lifecycle. It provides three distinct portals — for **Students**, **Companies**, and **Placement Officers** — each with role-specific dashboards, workflows, and data access.
+The **DCRUST Placement Portal** is a university placement management system for Deenbandhu Chhotu Ram University of Science and Technology (DCRUST), Murthal, Sonipat, Haryana. It provides three distinct portals — for **Students**, **Companies**, and **Placement Officers** — each with role-specific dashboards, workflows, and data access.
 
 ---
 
@@ -404,7 +404,7 @@ This project is licensed under the **MIT License** — see the [LICENSE](LICENSE
 ```
 MIT License
 
-Copyright (c) 2024 Campus Placement System Contributors
+Copyright (c) 2024 DCRUST Placement Portal Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

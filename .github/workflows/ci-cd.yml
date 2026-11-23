@@ -1,4 +1,4 @@
-name: CI/CD Pipeline — Campus Placement System
+name: CI/CD Pipeline — DCRUST Placement Portal
 
 on:
   push:

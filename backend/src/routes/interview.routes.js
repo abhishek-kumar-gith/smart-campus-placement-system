@@ -58,7 +58,7 @@ router.post('/', protect, authorize('admin', 'recruiter'), validate(interviewSch
   await application.save();
   const student = await Student.findById(application.studentId).populate('userId', 'email');
   if (student?.userId?.email) {
-    await sendNotificationEmail(student.userId.email, 'Interview Scheduled', `<h2>Smart Campus Placement</h2><p>An interview has been scheduled for <strong>${interview.round}</strong>.</p><p>Date: ${new Date(interview.scheduledAt).toLocaleString()}</p><p>Mode: ${interview.mode}</p>${interview.instructions ? `<p>Instructions: ${interview.instructions}</p>` : ''}`);
+    await sendNotificationEmail(student.userId.email, 'Interview Scheduled', `<h2>DCRUST Placement Portal</h2><p>An interview has been scheduled for <strong>${interview.round}</strong>.</p><p>Date: ${new Date(interview.scheduledAt).toLocaleString()}</p><p>Mode: ${interview.mode}</p>${interview.instructions ? `<p>Instructions: ${interview.instructions}</p>` : ''}`);
   }
   return ApiResponse.success(res, interview, 'Interview scheduled', 201);
 }));

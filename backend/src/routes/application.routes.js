@@ -84,7 +84,7 @@ router.patch('/:id/status', protect, authorize('admin', 'recruiter'), validate(z
     const student = await Student.findById(application.studentId).populate('userId', 'email');
     if (student?.userId?.email) {
       const subject = req.body.status === 'shortlisted' ? 'Application Shortlisted' : 'Application Status Update';
-      await sendNotificationEmail(student.userId.email, subject, `<h2>Smart Campus Placement</h2><p>Your application status has changed to <strong>${req.body.status}</strong>.</p>${req.body.reason ? `<p>Reason: ${req.body.reason}</p>` : ''}`);
+      await sendNotificationEmail(student.userId.email, subject, `<h2>DCRUST Placement Portal</h2><p>Your application status has changed to <strong>${req.body.status}</strong>.</p>${req.body.reason ? `<p>Reason: ${req.body.reason}</p>` : ''}`);
     }
   }
   return ApiResponse.success(res, application, 'Application status updated');

@@ -46,7 +46,7 @@ router.post('/send', protect, authorize('admin'), validate(z.object({
 
   const results = await Promise.all(recipients.map(async (email) => ({
     email,
-    result: await sendNotificationEmail(email, req.body.subject, `<div style="font-family:Arial,sans-serif;color:#1f2937"><h2>Smart Campus Placement</h2><p>${req.body.message.replace(/\n/g, '<br>')}</p><hr><p style="font-size:12px;color:#6b7280">Campus Placement Management System</p></div>`),
+    result: await sendNotificationEmail(email, req.body.subject, `<div style="font-family:Arial,sans-serif;color:#1f2937"><h2>DCRUST Placement Portal</h2><p>${req.body.message.replace(/\n/g, '<br>')}</p><hr><p style="font-size:12px;color:#6b7280">University Placement Management System</p></div>`),
   })));
   const deliveredCount = results.filter((item) => item.result?.delivered).length;
   const failedCount = recipients.length - deliveredCount;

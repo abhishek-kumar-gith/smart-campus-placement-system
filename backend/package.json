@@ -1,7 +1,7 @@
 {
   "name": "campus-placement-backend",
   "version": "1.0.0",
-  "description": "Smart Campus Placement Management System - Backend API",
+  "description": "DCRUST Placement Portal - University Placement Management System Backend API",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
