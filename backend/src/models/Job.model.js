@@ -10,6 +10,24 @@ const BRANCHES = [
   'Metallurgical Engineering', 'Instrumentation Engineering', 'Manufacturing Engineering',
 ];
 
+const approvalHistorySchema = new Schema({
+  previousApprovalStatus: {
+    type: String,
+    enum: ['draft', 'pending', 'approved', 'rejected'],
+    required: true,
+  },
+  newApprovalStatus: {
+    type: String,
+    enum: ['draft', 'pending', 'approved', 'rejected'],
+    required: true,
+  },
+  action: { type: String, enum: ['approved', 'rejected', 'pending', 'other'], required: true },
+  changedBy: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+  changedByRole: { type: String, enum: ['admin'], required: true },
+  remarks: { type: String, trim: true, maxlength: 1000, default: '' },
+  timestamp: { type: Date, default: Date.now },
+}, { _id: false });
+
 const jobSchema = new Schema({
   companyId: { type: Schema.Types.ObjectId, ref: 'Company', required: true },
   createdBy: { type: Schema.Types.ObjectId, ref: 'User', required: true },
@@ -41,6 +59,7 @@ const jobSchema = new Schema({
   publishedBy: { type: Schema.Types.ObjectId, ref: 'User', default: null },
   publishedAt: { type: Date, default: null },
   closedAt: { type: Date, default: null },
+  approvalHistory: { type: [approvalHistorySchema], default: [] },
 }, { timestamps: true });
 
 jobSchema.index({ status: 1, isPublished: 1 });

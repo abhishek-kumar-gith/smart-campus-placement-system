@@ -1,7 +1,7 @@
 const { Schema, model } = require('mongoose');
 
 const interviewSchema = new Schema({
-  applicationId: { type: Schema.Types.ObjectId, ref: 'Application', required: true, unique: true },
+  applicationId: { type: Schema.Types.ObjectId, ref: 'Application', required: true },
   studentId: { type: Schema.Types.ObjectId, ref: 'Student', required: true },
   jobId: { type: Schema.Types.ObjectId, ref: 'Job', required: true },
   companyId: { type: Schema.Types.ObjectId, ref: 'Company', required: true },
@@ -25,5 +25,8 @@ const interviewSchema = new Schema({
 interviewSchema.index({ studentId: 1 });
 interviewSchema.index({ companyId: 1 });
 interviewSchema.index({ scheduledAt: 1 });
+interviewSchema.index({ applicationId: 1, round: 1 }, { unique: true });
+interviewSchema.index({ applicationId: 1, scheduledAt: 1 });
+interviewSchema.index({ companyId: 1, scheduledAt: 1 });
 
 module.exports = model('Interview', interviewSchema);

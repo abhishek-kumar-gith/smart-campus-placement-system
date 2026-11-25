@@ -11,6 +11,7 @@ node_modules/
 /backend/uploads/resumes/*
 /backend/uploads/logos/*
 /backend/uploads/profile-photos/*
+/backend/uploads/offer-letters/*
 /backend/logs/*
 
 !/backend/uploads/resumes/.gitkeep
@@ -51,3 +52,7 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 *.log
+
+# Application-specific uploaded resumes
+/backend/uploads/application-resumes/*
+!/backend/uploads/application-resumes/.gitkeep

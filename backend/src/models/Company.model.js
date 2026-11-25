@@ -1,6 +1,16 @@
 const { Schema, model } = require('mongoose');
 const mongoosePaginate = require('mongoose-paginate-v2');
 
+const approvalHistorySchema = new Schema({
+  previousStatus: { type: String, enum: ['active', 'inactive', 'pending'], required: true },
+  newStatus: { type: String, enum: ['active', 'inactive', 'pending'], required: true },
+  action: { type: String, enum: ['approved', 'rejected', 'pending', 'other'], required: true },
+  changedBy: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+  changedByRole: { type: String, enum: ['admin', 'recruiter', 'student'], required: true },
+  remarks: { type: String, trim: true, maxlength: 1000, default: '' },
+  timestamp: { type: Date, default: Date.now },
+}, { _id: false });
+
 const companySchema = new Schema({
   name: { type: String, required: [true, 'Company name is required'], unique: true, trim: true },
   logo: { type: String, default: null },
@@ -13,6 +23,7 @@ const companySchema = new Schema({
   contactNumber: { type: String, required: [true, 'Contact number is required'] },
   status: { type: String, enum: ['active', 'inactive', 'pending'], default: 'pending' },
   addedBy: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+  approvalHistory: { type: [approvalHistorySchema], default: [] },
 }, { timestamps: true });
 
 companySchema.index({ status: 1 });

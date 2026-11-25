@@ -1,11 +1,38 @@
 const router = require('express').Router();
-const Company = require('../models/Company.model');
+const { z } = require('zod');
 const { protect, authorize } = require('../middleware/auth');
 const asyncHandler = require('../utils/asyncHandler');
-const ApiResponse = require('../utils/apiResponse');
+const { validate } = require('../middleware/validate');
+const {
+  getActiveCompanies,
+  createCompany,
+  updateCompany,
+} = require('../controllers/company.controller');
 
-router.get('/', asyncHandler(async (req, res) => ApiResponse.success(res, await Company.find({ status: 'active' }).sort({ name: 1 }))));
-router.post('/', protect, authorize('admin'), asyncHandler(async (req, res) => ApiResponse.success(res, await Company.create({ ...req.body, addedBy: req.user._id, status: 'active' }), 'Company created', 201)));
-router.patch('/:id', protect, authorize('admin'), asyncHandler(async (req, res) => ApiResponse.success(res, await Company.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true }), 'Company updated')));
+router.get('/', asyncHandler(getActiveCompanies));
+router.post('/', protect, authorize('admin'), validate(z.object({
+  name: z.string().trim().min(1),
+  logo: z.string().optional(),
+  website: z.string().optional(),
+  industry: z.string().trim().min(1),
+  location: z.string().trim().min(1),
+  description: z.string().optional(),
+  hrName: z.string().trim().min(1),
+  hrEmail: z.string().email(),
+  contactNumber: z.string().trim().min(1),
+}).strict()), asyncHandler(createCompany));
+router.patch('/:id', protect, authorize('admin'), validate(z.object({
+  name: z.string().trim().min(1).optional(),
+  logo: z.string().nullable().optional(),
+  website: z.string().optional(),
+  industry: z.string().trim().min(1).optional(),
+  location: z.string().trim().min(1).optional(),
+  description: z.string().optional(),
+  hrName: z.string().trim().min(1).optional(),
+  hrEmail: z.string().email().optional(),
+  contactNumber: z.string().trim().min(1).optional(),
+  status: z.enum(['active', 'inactive', 'pending']).optional(),
+  remarks: z.string().trim().max(1000).optional(),
+}).strict()), asyncHandler(updateCompany));
 
 module.exports = router;
