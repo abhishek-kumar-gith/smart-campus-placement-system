@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "test": "node -e \"console.log('Frontend smoke tests are covered by the production build.')\"",
+    "test": "node --test",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -24,6 +24,7 @@
     "@types/react": "^18.2.46",
     "@types/react-dom": "^18.2.18",
     "@vitejs/plugin-react": "^4.2.1",
+    "jsdom": "25.0.1",
     "vite": "^5.0.10",
     "tailwindcss": "^3.4.0",
     "postcss": "^8.4.33",

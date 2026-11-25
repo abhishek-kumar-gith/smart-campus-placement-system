@@ -12,9 +12,12 @@ const notificationSchema = new Schema({
   deliveredCount: { type: Number, default: 0, min: 0 },
   failedCount: { type: Number, default: 0, min: 0 },
   deliveryErrors: [{ type: String }],
+  isRead: { type: Boolean, default: false },
+  readAt: { type: Date, default: null },
 }, { timestamps: true });
 
 notificationSchema.index({ senderId: 1 });
 notificationSchema.index({ createdAt: -1 });
+notificationSchema.index({ recipientIds: 1, isRead: 1, createdAt: -1 });
 
 module.exports = model('Notification', notificationSchema);

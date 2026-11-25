@@ -24,7 +24,8 @@ app.use(compression());
 if (env.NODE_ENV !== 'test') {
   app.use(morgan('dev', { stream: { write: (msg) => logger.info(msg.trim()) } }));
 }
-app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+app.use('/uploads/logos', express.static(path.join(__dirname, '../uploads/logos')));
+app.use('/uploads/profile-photos', express.static(path.join(__dirname, '../uploads/profile-photos')));
 app.use('/api/', apiLimiter);
 
 // Health check
@@ -44,6 +45,7 @@ const interviewRoutes   = require('./routes/interview.routes');
 const placementRoutes   = require('./routes/placement.routes');
 const notificationRoutes= require('./routes/notification.routes');
 const adminRoutes       = require('./routes/admin.routes');
+const offerLetterRoutes = require('./routes/offerLetter.routes');
 
 app.use('/api/v1/auth',          authRoutes);
 app.use('/api/v1/students',      studentRoutes);
@@ -55,6 +57,7 @@ app.use('/api/v1/resumes',       resumeRoutes);
 app.use('/api/v1/interviews',    interviewRoutes);
 app.use('/api/v1/placements',    placementRoutes);
 app.use('/api/v1/notifications', notificationRoutes);
+app.use('/api/v1/offers',       offerLetterRoutes);
 app.use('/api/v1/admin',         adminRoutes);
 
 app.use((req, res) => res.status(404).json({ success: false, message: `Route ${req.originalUrl} not found.` }));
